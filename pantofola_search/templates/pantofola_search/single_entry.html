@@ -1,0 +1,12 @@
+<p>
+    <span class="fa fa-upload" style="color: #8AA37B;"></span>{% if torrent.seed < 0 %}0{% else %}
+    {{ torrent.seed }}{% endif %} <span class="fa fa-download" style="color: #CD0000;"></span>
+    {% if torrent.leech < 0 %}0{% else %}{{ torrent.leech }}{% endif %} - ({{ torrent.total_size|filesizeformat }})
+    - {{ torrent.language }} - <a href="magnet:?xt=urn:btih:{{ torrent.pk|upper | urlencode}}{{ "&tr=udp://open.demonii.com:1337/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://tracker.publicbt.com:80/announce&tr=udp://tracker.istole.it:80/announce" | iriencode }}&dn={{ "[Pantofola.io] - " | urlencode }}{% if torrent.video_format %}[{{ torrent.video_format | urlencode }}]{% endif %}{% if torrent.video_source %}[{{ torrent.video_source | urlencode }}]{% endif %}{% if torrent.video_codec %}[{{ torrent.video_codec | urlencode }}]{% endif %}{% if torrent.audio_source %}[{{ torrent.audio_source | urlencode }}]{% endif %}{{ movie_title | urlencode }} - {{ torrent.language | urlencode }}"><i class="fa fa-magnet" style="color: #8AA37B;"></i></a> -
+    <a href="http://torcache.net/torrent/{{ torrent.pk|upper }}.torrent"
+                                  target="_blank">{{ torrent.pk|upper }}</a> -
+    <span class="label label-primary">{{ torrent.video_format }}</span>
+    <span class="label label-info">{{ torrent.video_source }}</span>
+    <span class="label label-warning">{{ torrent.video_codec }}</span>
+    <span class="label label-danger">{{ torrent.audio_source }}</span>
+</p>

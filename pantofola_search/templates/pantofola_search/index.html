@@ -1,0 +1,211 @@
+{% extends 'pantofola_search/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container">
+        <div class="row" style="padding-top: 30px;">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                {% get_available_languages as LANGUAGES %}
+                {% trans "Select language: " %} {% get_language_info_list for LANGUAGES as languages %}
+                - {% for language in languages %}
+                <a href="{% url 'set_lang'  language.code %}">{{ language.name_local|capfirst  }}</a> -
+            {% endfor %}
+            </div>
+        </div>
+        {% if not query %}
+            <div class="row" style="padding-top: 30px;">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <div class="alert alert-dismissable alert-success">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+
+                        <strong>{% trans "Compatibile con couchpoato (Beta)" %}</strong><br/>
+                        {% blocktrans with host=request.get_host %} Utilizza {{ host }} come provider TorrentPotato in couchpotato utilizzando il link http://{{ host }}/<code>lang</code>/cp e come username e passkey dev <br/>
+
+                            Esempio per avere film solo in italiano:<br/><br/>
+
+                            <code>http://{{ host }}/it/cp</code><br/>
+                            <code>Pass Key: dev</code><br/>
+                            <code>Username: dev</code><br/><br/>
+
+                            Questa feature è ancora in beta, per info/suggerimenti scrivi a: info [tu_sai_cosa] pantofola.io
+
+                        {% endblocktrans %}
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row" style="padding-top: 30px;">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <h2><a href="{% url 'pantofola_search_home' %}">{{ request.get_host}}</a> - {% trans "a torrent search engine for dubbed movies" %}</h2>
+
+                <blockquote>
+                    <small>
+                        {% trans "2 fig. Con valore scherz. o anche spreg., persona amante del quieto vivere, che per apatia o indolenza rifugge la vita attiva: <i>essere un p. </i>" %}
+                    </small>
+                </blockquote>
+            </div>
+        </div>
+
+
+        <div class="text-center">
+            <form role="form"  method="get" action="{% url 'pantofola_search_result' %}">
+                <div class="form-group form-inline" >
+                    <input style="width: 70%;" type="text" class="form-control input-lg" name="q" placeholder="{% trans  "Movie Title or Imdb Id" %}" {% if query %}value="{{ query }}"{% endif %}>
+                    <select class="form-control input-lg" name="lang" id="lang_combo">
+                        <option value="">{% trans "Any" %}</option>
+                        <option value="ita" {% if lang == "ita" %}selected{% endif %}>{% trans "Ita" %}</option>
+                        <option value="ger" {% if lang == "ger" %}selected{% endif %}>{% trans "Ger" %}</option>
+                        <option value="fre" {% if lang == "fre" %}selected{% endif %}>{% trans "Fre" %}</option>
+                        <option value="spa" {% if lang == "spa" %}selected{% endif %}>{% trans "Spa" %}</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+
+                    <select class="form-control input-sm" name="video_format">
+                        <option value="">{% trans "Any Video Format" %}</option>
+                        <option value="720p">720p</option>
+                        <option value="1080p">1080p</option>
+                        <option value="480p">480p</option>
+                    </select>
+
+                    <select class="form-control input-sm" name="video_source">
+                        <option value="">{% trans  "Any Video Source" %}</option>
+                        <option>bdrip</option>
+                        <option>brrip</option>
+                        <option>dvdrip</option>
+                        <option>cam</option>
+                    </select>
+
+                    <select class="form-control input-sm" name="video_codec">
+                        <option value="">{% trans "Any Video Codec" %}</option>
+                        <option>x264</option>
+                        <option>xvid</option>
+                        <option>divx</option>
+                    </select>
+
+                    <select class="form-control input-sm" name="audio_source">
+                        <option value="">{% trans "Any Audio Source" %}</option>
+                        <option>ac3</option>
+                        <option>dts</option>
+                        <option>md</option>
+                        <option>ld</option>
+                    </select>
+
+                </div>
+                <button type="submit" class="btn btn-default btn-lg btn-success">{% trans "Go!" %}</button>
+            </form>
+
+        </div>
+        <script type="application/javascript">
+            {
+                var ht = {'it':'ita', 'de':'ger', 'es':'spa', 'en':'eng', 'fr':'fra'}
+                {% if lang %}
+                    localStorage.setItem("panto_lang", "{{ lang }}")
+                {% else %}
+                    var set_lang = localStorage.getItem("panto_lang");
+                    if(!set_lang)
+                    {
+                        {% get_current_language as LANGUAGE_CODE %}
+                        localStorage.setItem("panto_lang", ht.{{ LANGUAGE_CODE }})
+                        set_lang = ht.{{ LANGUAGE_CODE }}
+                    }
+                    document.getElementById("lang_combo").value = set_lang;
+                {% endif %}
+
+                $("#lang_combo").click(function(){
+                    if(this.value=="")
+                        localStorage.removeItem("panto_lang");
+                    else
+                        localStorage.setItem("panto_lang", this.value);
+                });
+            }
+        </script>
+        {% block results %}
+        {% endblock %}
+
+        {% if n_torrent and  n_movie %}
+            <div class="row" style="padding-top: 15px; padding-bottom: 15px;">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">{% url 'all_movies' as movie_url %} {% blocktrans %}We indexed {{ n_torrent }} torrent spread across {{ n_movie }} <a href="{{ movie_url }}">movies</a> {% endblocktrans %} - info [you_know_what_put_here] pantofola.io<br />
+                    {% for language in languages %}
+                        <a href="/{{ language.code }}">/{{ language.code }}</a>
+                    {% endfor %}  <a href="#" onclick="event.preventDefault(); $('#api').collapse('toggle');">/api</a>
+                    <a href="#" onclick="event.preventDefault(); $('#cp').collapse('toggle');">/couchpotato</a>
+                    <div class="alert alert-info collapse" id="api">
+                        <div class="alert alert-info collapse in" id="api" style="height: auto;">
+                            <code>GET http://pantofola.io/&lt;lang&gt;/api/title/&lt;imdb_id&gt;</code><br>Ex:<br>
+                            <code>GET http://pantofola.io/it/api/title/tt0241527/</code><br>
+                            Result:
+                            <!-- HTML generated using hilite.me -->
+                            <div>
+                            <pre style="margin: 0; line-height: 125%">{
+                           <span style="color: #007700">&quot;data&quot;</span>:{
+                              <span style="color: #007700">&quot;original_title&quot;</span>:<span style="background-color: #fff0f0">&quot;Harry Potter and the Sorcerer&#39;s Stone&quot;</span>,
+                              <span style="color: #007700">&quot;torrents&quot;</span>:[
+                                 {
+                                    <span style="color: #007700">&quot;lang&quot;</span>:<span style="background-color: #fff0f0">&quot;ITA&quot;</span>,
+                                    <span style="color: #007700">&quot;video_format&quot;</span>:<span style="background-color: #fff0f0">&quot;1080p&quot;</span>,
+                                    <span style="color: #007700">&quot;audio_source&quot;</span>:<span style="background-color: #fff0f0">&quot;ac3&quot;</span>,
+                                    <span style="color: #007700">&quot;seed&quot;</span>:<span style="color: #0000DD; font-weight: bold">64</span>,
+                                    <span style="color: #007700">&quot;hash&quot;</span>:<span style="background-color: #fff0f0">&quot;93E0D9B483A2AA95E96D79CE57BB1C2CE81F38D6&quot;</span>,
+                                    <span style="color: #007700">&quot;video_source&quot;</span>:<span style="background-color: #fff0f0">&quot;bdrip&quot;</span>,
+                                    <span style="color: #007700">&quot;video_codec&quot;</span>:<span style="background-color: #fff0f0">&quot;x265&quot;</span>,
+                                    <span style="color: #007700">&quot;size&quot;</span>:<span style="color: #0000DD; font-weight: bold">4377568048</span>
+                                 },
+                                 {
+                                    <span style="color: #007700">&quot;lang&quot;</span>:<span style="background-color: #fff0f0">&quot;ITA&quot;</span>,
+                                    <span style="color: #007700">&quot;video_format&quot;</span>:<span style="background-color: #fff0f0">&quot;&quot;</span>,
+                                    <span style="color: #007700">&quot;audio_source&quot;</span>:<span style="background-color: #fff0f0">&quot;ac3&quot;</span>,
+                                    <span style="color: #007700">&quot;seed&quot;</span>:<span style="color: #0000DD; font-weight: bold">44</span>,
+                                    <span style="color: #007700">&quot;hash&quot;</span>:<span style="background-color: #fff0f0">&quot;402e3c2423fc343fa9b1a7fe88f28a792e0977fd&quot;</span>,
+                                    <span style="color: #007700">&quot;video_source&quot;</span>:<span style="background-color: #fff0f0">&quot;dvdrip&quot;</span>,
+                                    <span style="color: #007700">&quot;video_codec&quot;</span>:<span style="background-color: #fff0f0">&quot;&quot;</span>,
+                                    <span style="color: #007700">&quot;size&quot;</span>:<span style="color: #0000DD; font-weight: bold">1472495616</span>
+                                 },
+                                 ...
+                              ],
+                              <span style="color: #007700">&quot;imdb_id&quot;</span>:<span style="background-color: #fff0f0">&quot;tt0241527&quot;</span>
+                           },
+                           <span style="color: #007700">&quot;result&quot;</span>:<span style="background-color: #fff0f0">&quot;200&quot;</span>
+                        }
+                        </pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info collapse" id="cp">
+                        <div class="alert alert-info collapse in" id="cp" style="height: auto;">
+                            TorrentPotato provider: (Beta)<br/>
+                            <code>http://pantofola.io/&lt;lang&gt;/cp</code><br />
+                            <code>Pass Key: dev</code><br/>
+                            <code>Username: dev</code><br/><br/>
+                            Ex (Italian torrents provider):<br />
+                            <code>http://pantofola.io/it/cp</code><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {#            <div class="row" style="padding-top: 15px; padding-bottom: 15px;">#}
+            {#                <div class="col-lg-1"></div>#}
+            {#                <div class="col-lg-5">Latest torrent:<br/>12 Torrent </div>#}
+            {#                <div class="col-lg-5">Latest movies:<br/>12 Torrent </div>#}
+            {#            </div>#}
+
+        {% endif %}
+
+        <div class="row" style="padding-top: 15px; padding-bottom: 15px;">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <small>Build with love and, Python/Django, ElasticSearch, Redis, Celery. Want hire me? Drop me a mail: info AT pantofola.io</small><br/>
+                <small>Data Feed courtesy of <a href="https://kat.cr" target="_blank">Kick Ass Torrent</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,56 @@
+{% extends 'pantofola_search/index.html' %}
+{% load i18n %}
+{% load movie_extra %}
+{% block title %}pantofola.io - {% if query %}{% trans  "results for:" %} {{ query }}{% else %} {% trans "All Movies" %} {% endif %}{% endblock %}
+{% block results %}
+    <div class="row" style="padding-top: 15px;">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            {% get_current_language as LANGUAGE_CODE %}
+            <h1> {{ movies_count }} {% trans  "Movies Available" %}</h1>
+
+            {% for movie in movies %}
+                <h6>
+                    <a href="{% url 'single_movie' movie.pk %}">{{ movie.pk }}</a> - {{ movie|get_title:LANGUAGE_CODE }}
+                </h6>
+            {% endfor %}
+
+            <div class="pagination">
+    <span class="step-links">
+        {% if movies.has_previous %}
+            <a href="?page={{ movies.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {% blocktrans  %}Page {{ movies.number }} {{ movies.paginator.num_pages }} {% endblocktrans  %}
+        </span>
+
+        {% if movies.has_next %}
+            <a href="?page={{ movies.next_page_number }}">{%  trans "next" %}</a>
+        {% endif %}
+    </span>
+            </div>
+
+            <ul class="pagination pagination-sm">
+                {% if movies.has_previous %}
+                    <li><a href="?page={{ movies.previous_page_number }}">&laquo;</a></li>
+                {% endif %}
+                {% if movies.number >   1 %}
+                    <li><a href="?page=1">1</a></li>
+                {% endif %}
+
+                <li class="active"><a href="#">{{ movies.number }}<span class="sr-only">(current)</span></a></li>
+
+                {% if movies.number <   movies.paginator.num_pages %}
+                    <li><a href="?page={{ movies.paginator.num_pages }}">{{ movies.paginator.num_pages }}</a></li>
+                {% endif %}
+
+
+                {% if movies.has_next %}
+                    <li><a href="?page={{ movies.next_page_number }}">&raquo;</a></li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+{% endblock %}

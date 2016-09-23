@@ -1,0 +1,30 @@
+{% extends 'pantofola_search/index.html' %}
+{% load i18n %}
+{% load movie_extra %}
+{%  block title %}
+    {% get_current_language as LANGUAGE_CODE %}
+    pantofola.io {% if query %} {% trans "results for:" %} {{ query }} {% else %} - {{ movie|get_title:LANGUAGE_CODE }} ({{movie.year}}) {% endif %}
+{% endblock %}
+{% block results %}
+     <div class="row" style="padding-top: 15px;">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+      <h4> <a href="http://anonym.to/?http://www.imdb.com/title/{{movie.pk}}" target="_blank">{{movie.pk}}</a> - {{ movie|get_title:LANGUAGE_CODE }} ({{movie.year}}) </h4>
+
+                    aka: <small>{% for t in movie.title_set.all %} {{ t }} {% endfor %}</small>
+
+                    {% for torrent in movie.torrent_set.all %}
+
+                        {% if not torrent.broken %}
+                          {% include "pantofola_search/single_entry.html" with movie_title=movie.original_title%}
+
+                        {% endif %}
+
+
+                    {% endfor %}
+
+        </div>
+    </div>
+
+
+{% endblock %}

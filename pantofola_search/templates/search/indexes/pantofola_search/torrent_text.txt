@@ -1,0 +1,5 @@
+{{ object.movie.original_title }}
+{% for t in object.movie.foreigntitle_set.all %}
+{{ t.title }}
+{% endfor %}
+{{ object.movie.imdb_id }}

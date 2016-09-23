@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.pulsar.pantofola_io" name="Pulsar Dummy Provider" version="0.0.1" provider-name="pantofola.io">
+    <requires>
+        <import addon="xbmc.python" version="2.12.0"/>
+        <import addon="plugin.video.pulsar" version="0.2"/>
+    </requires>
+    <extension point="xbmc.python.script" library="main.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Pantofola.io Torrent Search Engine for dubbed movies</summary>
+        <language></language>
+        <website>http://pantofola.io</website>
+        <email>info@pantofola.io</email>
+        <platform>all</platform>
+    </extension>
+</addon>

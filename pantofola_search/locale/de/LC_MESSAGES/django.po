@@ -1,0 +1,187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-11 20:57+0000\n"
+"PO-Revision-Date: 2015-05-10 23:06+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.7.6\n"
+
+#: admin.py:70
+msgid "Only Broken 0 Seed"
+msgstr ""
+
+#: admin.py:84
+msgid "Yes"
+msgstr ""
+
+#: admin.py:85
+msgid "No"
+msgstr ""
+
+#: templates/pantofola_search/base.html:36
+#: templates/pantofola_search/index.html:43
+#: templates/pantofola_search/list_view.html:3
+msgid "a torrent search engine for dubbed movies"
+msgstr "Suchsystem der Torrent-Filmen auf Deutsch"
+
+#: templates/pantofola_search/base.html:36
+msgid "compatibile con couchpotato"
+msgstr "Couchpotato kompatibel"
+
+#: templates/pantofola_search/index.html:10
+msgid "Select language: "
+msgstr "Sprache wahlen:"
+
+#: templates/pantofola_search/index.html:23
+msgid "Compatibile con couchpoato (Beta)"
+msgstr "Couchpotato kompatibel! (Beta)"
+
+#: templates/pantofola_search/index.html:24
+#, python-format
+msgid ""
+" Utilizza %(host)s come provider TorrentPotato in couchpotato utilizzando il "
+"link http://%(host)s/<code>lang</code>/cp e come username e passkey dev <br/"
+">\n"
+"\n"
+"                            Esempio per avere film solo in italiano:<br/><br/"
+">\n"
+"\n"
+"                            <code>http://%(host)s/it/cp</code><br/>\n"
+"                            <code>Pass Key: dev</code><br/>\n"
+"                            <code>Username: dev</code><br/><br/>\n"
+"\n"
+"                            Questa feature è ancora in beta, per info/"
+"suggerimenti scrivi a: info [tu_sai_cosa] pantofola.io\n"
+"\n"
+"                        "
+msgstr ""
+"Verwenden http://%(host)s/<code>lang</code>/cp als TorrentPotato Anbieter "
+"mit <code>dev</code> als Benutzernamen und Kennwortschlüssel<br/>\n"
+"\n"
+"Zum Beispiel, wenn Sie deutsche Synchron Filme nur wollen:<br/><br/>\n"
+"\n"
+"                        <code>http://%(host)s/de/cp</code><br/>\n"
+"                        <code>Pass Key: dev</code><br/>\n"
+"                        <code>Username: dev</code><br/><br/>\n"
+"\n"
+"Diese Funktion ist noch im Beta, bitte für Informationen und Anregungen "
+"schreiben Sie mir eine E-Mail: info [sie_es_wissen] pantofolaio.io\n"
+"                        "
+
+#: templates/pantofola_search/index.html:47
+msgid ""
+"2 fig. Con valore scherz. o anche spreg., persona amante del quieto vivere, "
+"che per apatia o indolenza rifugge la vita attiva: <i>essere un p. </i>"
+msgstr ""
+"img 2. Im allgemeinen tragt dieses Wort  eine scherzhafte oder sogar "
+"vernichtende Bedeutung. Stubenhocker ist ein Mensch, der ein leises und "
+"ruhiges Leben bevorzugt. Er verzichtet sich auf aktiven Lebensstil wegen "
+"seiner Lassigkeit und Apathie: <i>sein </i>"
+
+#: templates/pantofola_search/index.html:57
+msgid "Movie Title or Imdb Id"
+msgstr "Filmtitel oder lmdb ld"
+
+#: templates/pantofola_search/index.html:59
+msgid "Any"
+msgstr ""
+
+#: templates/pantofola_search/index.html:60
+msgid "Ita"
+msgstr ""
+
+#: templates/pantofola_search/index.html:61
+msgid "Ger"
+msgstr ""
+
+#: templates/pantofola_search/index.html:62
+msgid "Fre"
+msgstr ""
+
+#: templates/pantofola_search/index.html:63
+msgid "Spa"
+msgstr ""
+
+#: templates/pantofola_search/index.html:69
+msgid "Any Video Format"
+msgstr "Jeweiliges Videoformat"
+
+#: templates/pantofola_search/index.html:76
+msgid "Any Video Source"
+msgstr "Jeweilige Vedeoquelle"
+
+#: templates/pantofola_search/index.html:84
+msgid "Any Video Codec"
+msgstr "Jeweiliger Videokodec"
+
+#: templates/pantofola_search/index.html:91
+msgid "Any Audio Source"
+msgstr "Jeweilige Audioquelle"
+
+#: templates/pantofola_search/index.html:99
+msgid "Go!"
+msgstr "Los!"
+
+#: templates/pantofola_search/index.html:133
+#, python-format
+msgid ""
+"We indexed %(n_torrent)s torrent spread across %(n_movie)s <a href="
+"\"%(movie_url)s\">movies</a> "
+msgstr ""
+"Wir indizierten %(n_torrent)s Torrentfiles fur %(n_movie)s <a href="
+"\"%(movie_url)s\">Filmen </a> "
+
+#: templates/pantofola_search/list_view.html:3
+#: templates/pantofola_search/movies.html:4
+#: templates/pantofola_search/single_movie.html:6
+msgid "results for:"
+msgstr "Ergebnis fur:"
+
+#: templates/pantofola_search/list_view.html:11
+msgid "Results for:"
+msgstr "Ergebnis fur:"
+
+#: templates/pantofola_search/list_view.html:44
+msgid "0 Seed  Torrents"
+msgstr "Torrent ohne sids"
+
+#: templates/pantofola_search/list_view.html:44
+msgid "(Click to show)"
+msgstr "(klicken zum Ubersicht)"
+
+#: templates/pantofola_search/list_view.html:63
+msgid "No results found."
+msgstr "keine Ergebnisse"
+
+#: templates/pantofola_search/list_view.html:66
+msgid "maybe you are looking for:"
+msgstr "Vielleicht suchten Sie  nach:"
+
+#: templates/pantofola_search/movies.html:4
+msgid "All Movies"
+msgstr ""
+
+#: templates/pantofola_search/movies.html:10
+msgid "Movies Available"
+msgstr "befahrbare Filmen"
+
+#: templates/pantofola_search/movies.html:25
+#, python-format
+msgid "Page %(movies.number)s %(movies.paginator.num_pages)s "
+msgstr "Seite %(movies.number)s  von %(movies.paginator.num_pages)s "
+
+#: templates/pantofola_search/movies.html:29
+msgid "next"
+msgstr "Nachste"

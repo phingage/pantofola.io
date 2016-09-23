@@ -1,0 +1,75 @@
+{% extends 'pantofola_search/index.html' %}
+{% load i18n %}
+{% block title %} {{ request.get_host}} {% trans "a torrent search engine for dubbed movies" %} {% if query %} {% trans "results for:" %} {{ query }} {% endif %}{% endblock %}
+{% block results %}
+    <div class="row" style="padding-top: 15px;">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+
+            {% if query %}
+
+                <h3>{% trans "Results for:" %} {{ query }}
+                    {% if lang or video_format or video_source or video_codec or audio_source %}
+                        ( {{ lang | upper }} )
+                        <small>
+                            <span class="label label-primary">{{ video_format }}</span>
+                            <span class="label label-info">{{ video_source }}</span>
+                            <span class="label label-warning">{{ video_codec }}</span>
+                            <span class="label label-danger">{{ audio_source }}</span>
+                        </small>
+                    {% endif %}</h3>
+
+                {% for movie, torrents in   aggregated_by_movie.items %}
+
+
+                    <h4><a href="http://anonym.to/?http://www.imdb.com/title/{{ movie }}" target="_blank">{{ movie }}</a>
+                        - {% if torrents.0 %} {% if torrents.2 %}{{ torrents.2 }} {% else %}{{ torrents.0.0.original_title }}{% endif %} ({{ torrents.0.0.year }}) {% else %}{% if torrents.2 %}{{ torrents.2 }} {% else %}{{ torrents.1.0.original_title }}{% endif %}  ({{ torrents.1.0.year }}){% endif %}  </h4>
+
+                    aka:
+                    <small>{% if torrents.0 %}{% for t in torrents.0.0.aka %} {{ t }} {% endfor %}{% else %}{% for t in torrents.1.0.aka %} {{ t }} {% endfor %}{% endif %}</small><br /><br />
+
+                    {% if torrents.0 %}
+
+                        {% for good_torrent in torrents.0 %}
+
+                            {% include "pantofola_search/single_entry.html" with movie_title=good_torrent.original_title torrent=good_torrent %}
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                    {% if torrents.1 %}
+
+                        {% if  torrents.0 %}
+                        <span> <a href="#" onclick="event.preventDefault(); $('#accordion{{ forloop.counter0 }}').collapse('toggle');"> {% trans "0 Seed  Torrents" %} </a> {% trans "(Click to show)" %}</span>
+                        <div id="accordion{{ forloop.counter0 }}" class="collapse">
+
+                        {% endif %}
+                            <p>
+                                {% for bad_torrent in torrents.1 %}
+
+                                    {% include "pantofola_search/single_entry.html" with movie_title=bad_torrent.original_title torrent=bad_torrent %}
+
+                                {% endfor %}
+                            </p>
+                        {% if  torrents.0 %}
+                        </div>
+                        {% endif %}
+
+                    {% endif %}
+
+                    <br/>
+                {% empty %}
+                    <p>{% trans "No results found." %}</p>
+                    {% if suggestion %}
+                        {% ifnotequal suggestion query %}
+                            {% trans "maybe you are looking for:" %}
+                            <a href="{% url 'pantofola_search_result' %}?q={{ suggestion }}">{{ suggestion }}</a>
+                        {% endifnotequal %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

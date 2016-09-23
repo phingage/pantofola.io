@@ -1,0 +1,17 @@
+{% extends 'pantofola_search/base.html' %}
+
+{% block content %}
+
+
+
+<form class="form" id="Search" method="get" action="/search/">
+            <p><label for="Term">digita il titolo di un film o di una serie tv</label>
+            <input type="text" id="Term" name="q" class="populate term" value="" title="digita il titolo di un film o di una serie tv">
+
+                 <input type="radio" name="lang" value="ITA">Ita<br>
+                 <input type="radio" name="lang" value="FRE">Fra
+
+            <input id="Submit" class="submit" type="submit" value="Submit"></p>
+</form>
+
+{% endblock %}
