@@ -14,7 +14,7 @@ django-celery==3.1.16
 django-celery-transactions==0.3.1
 django-debug-toolbar==1.2.1
 django-haystack==2.3.1
-ecdsa==0.11
+ecdsa==0.13.3
 elasticsearch==1.0.0
 gunicorn==18.0
 kombu==3.0.26
