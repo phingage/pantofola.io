@@ -19,7 +19,7 @@ elasticsearch==1.0.0
 gunicorn==18.0
 kombu==3.0.26
 mechanize==0.2.5
-paramiko==1.14.0
+paramiko==2.10.1
 psycopg2==2.5.3
 pycrypto==2.6.1
 pyelasticsearch==0.6.1
